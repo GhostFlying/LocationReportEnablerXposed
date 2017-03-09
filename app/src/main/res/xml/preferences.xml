@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <EditTextPreference
+        android:key="@string/pref_operator_country_key"
+        android:title="@string/pref_operator_country"
+        android:dialogTitle="@string/pref_operator_country"
+        android:defaultValue="@string/pref_operator_country_default" />
+
+    <EditTextPreference
+        android:key="@string/pref_operator_code_key"
+        android:title="@string/pref_operator_code"
+        android:dialogTitle="@string/pref_operator_code"
+        android:defaultValue="@string/pref_operator_code_default" />
+
+    <EditTextPreference
+        android:key="@string/pref_operator_name_key"
+        android:title="@string/pref_operator_name"
+        android:dialogTitle="@string/pref_operator_name"
+        android:defaultValue="@string/pref_operator_name_default" />
+
+    <CheckBoxPreference
+        android:title="@string/pref_hide_launcher"
+        android:defaultValue="false"
+        android:key="@string/pref_hide_launcher_key"/>
+</PreferenceScreen>

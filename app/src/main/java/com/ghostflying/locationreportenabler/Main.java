@@ -7,6 +7,7 @@ import java.util.List;
 import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XC_MethodReplacement;
+import de.robv.android.xposed.XSharedPreferences;
 import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
 
@@ -18,7 +19,8 @@ import static de.robv.android.xposed.XposedHelpers.findAndHookMethod;
 public class Main implements IXposedHookLoadPackage {
     private static final List<String> HOOKED_PKG = new ArrayList<>(Arrays.asList(
             "com.google.android.gms",
-            "com.google.android.apps.maps"
+            "com.google.android.apps.maps",
+            "com.example.ghostflying.testapp"
         )
     );
 
@@ -39,23 +41,29 @@ public class Main implements IXposedHookLoadPackage {
     }
 
     private XC_MethodHook mOperatorCodeHook = new XC_MethodReplacement() {
+        XSharedPreferences sharedPreferences = new XSharedPreferences(BuildConfig.APPLICATION_ID);
+
         @Override
         protected Object replaceHookedMethod(MethodHookParam methodHookParam) throws Throwable {
-            return "310030";
+            return sharedPreferences.getString("pref_operator_code", "310030");
         }
     };
 
     private XC_MethodHook mCountryISOHook = new XC_MethodReplacement() {
+        XSharedPreferences sharedPreferences = new XSharedPreferences(BuildConfig.APPLICATION_ID);
+
         @Override
         protected Object replaceHookedMethod(MethodHookParam methodHookParam) throws Throwable {
-            return "us";
+            return sharedPreferences.getString("pref_operator_country", "us");
         }
     };
 
     private XC_MethodHook mOperatorNameHook = new XC_MethodReplacement() {
+        XSharedPreferences sharedPreferences = new XSharedPreferences(BuildConfig.APPLICATION_ID);
+
         @Override
         protected Object replaceHookedMethod(MethodHookParam methodHookParam) throws Throwable {
-            return "Centennial";
+            return sharedPreferences.getString("pref_operator_name", "Centennial");
         }
     };
 }

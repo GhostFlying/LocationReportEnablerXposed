@@ -3,4 +3,19 @@
 
     <string name="app_name">LocationReportEnabler</string>
 
+    <string name="pref_operator_country_key">pref_operator_country</string>
+    <string name="pref_operator_code_key">pref_operator_code</string>
+    <string name="pref_operator_name_key">pref_operator_name</string>
+
+    <string name="pref_operator_country">Set operator country</string>
+    <string name="pref_operator_code">Set operator code</string>
+    <string name="pref_operator_name">Set operator name</string>
+
+    <string name="pref_operator_country_default">us</string>
+    <string name="pref_operator_code_default">310030</string>
+    <string name="pref_operator_name_default">Centennial</string>
+
+    <string name="pref_hide_launcher_key">pref_hide_launcher</string>
+    <string name="pref_hide_launcher">Hide icon from launcher</string>
+
 </resources>
