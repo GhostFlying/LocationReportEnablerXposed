@@ -1,12 +1,14 @@
 package com.ghostflying.locationreportenabler;
 
+import android.content.ComponentName;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.preference.EditTextPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.os.Bundle;
-
-import de.robv.android.xposed.XSharedPreferences;
+import android.preference.PreferenceGroup;
+import android.util.Log;
 
 public class SettingActivity extends PreferenceActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
 
@@ -23,7 +25,7 @@ public class SettingActivity extends PreferenceActivity implements SharedPrefere
     protected void onResume() {
         super.onResume();
 
-        updateSummary();
+        updateSummary(getPreferenceScreen());
 
         SharedPreferences sharedPreferences = getPreferenceManager().getSharedPreferences();
         sharedPreferences.registerOnSharedPreferenceChangeListener(this);
@@ -38,18 +40,44 @@ public class SettingActivity extends PreferenceActivity implements SharedPrefere
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
         updateSummary(sharedPreferences, s);
+
+        if (getString(R.string.pref_hide_launcher_key).equals(s)) {
+            boolean needHide = sharedPreferences.getBoolean(s, false);
+
+            if (needHide) {
+                PackageManager p = getPackageManager();
+                ComponentName componentName = new ComponentName(this, SettingActivity.class);
+                if (needHide) {
+                    if (p.getComponentEnabledSetting(componentName) != PackageManager.COMPONENT_ENABLED_STATE_DISABLED) {
+                        p.setComponentEnabledSetting(componentName, PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP);
+                        Log.d("PropUtil", "Hide the icon.");
+                    }
+                } else {
+                    if (p.getComponentEnabledSetting(componentName) != PackageManager.COMPONENT_ENABLED_STATE_ENABLED) {
+                        p.setComponentEnabledSetting(componentName, PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP);
+                        Log.d("PropUtil", "Show the icon.");
+                    }
+                }
+            }
+        }
     }
 
     private void updateSummary(SharedPreferences sharedPreferences, String key) {
-        findPreference(key).setSummary(sharedPreferences.getString(key, ""));
+        Preference preference = findPreference(key);
+        if (preference instanceof EditTextPreference) {
+            preference.setSummary(sharedPreferences.getString(key, ""));
+        }
     }
 
-    private void updateSummary() {
-        for (int i = 0; i < getPreferenceScreen().getPreferenceCount(); i++) {
-            Preference preference = getPreferenceScreen().getPreference(i);
+    private void updateSummary(PreferenceGroup group) {
+        for (int i = 0; i < group.getPreferenceCount(); i++) {
+            Preference preference = group.getPreference(i);
             if (preference instanceof EditTextPreference) {
                 EditTextPreference editTextPreference = (EditTextPreference)preference;
                 editTextPreference.setSummary(editTextPreference.getText());
+            }
+            if (preference instanceof PreferenceGroup) {
+                updateSummary((PreferenceGroup) preference);
             }
         }
     }

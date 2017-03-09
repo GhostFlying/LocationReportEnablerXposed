@@ -17,5 +17,9 @@
 
     <string name="pref_hide_launcher_key">pref_hide_launcher</string>
     <string name="pref_hide_launcher">Hide icon from launcher</string>
+    <string name="pref_hide_launcher_summary">WARNING: u may not access all settings unless u reinstall</string>
+
+    <string name="pref_cate_reboot_title">Take effect after reboot</string>
+    <string name="pref_cate_now_title">Take effect immediately</string>
 
 </resources>
