@@ -17,22 +17,13 @@ import static de.robv.android.xposed.XposedHelpers.findAndHookMethod;
  * Created by ghostflying on 2/16/15.
  */
 public class Main implements IXposedHookLoadPackage {
-    private static final List<String> HOOKED_PKG = new ArrayList<>(Arrays.asList(
-            "com.google.android.gms",
-            "com.google.android.apps.maps",
-            "com.example.ghostflying.testapp"
-        )
-    );
 
     @Override
     public void handleLoadPackage(XC_LoadPackage.LoadPackageParam loadPackageParam) throws Throwable {
-        if (!HOOKED_PKG.contains(loadPackageParam.packageName)){
-            return;
-        }
-
         try{
             findAndHookMethod("android.telephony.TelephonyManager", loadPackageParam.classLoader, "getSimOperator", mOperatorCodeHook);
             findAndHookMethod("android.telephony.TelephonyManager", loadPackageParam.classLoader, "getSimCountryIso", mCountryISOHook);
+            findAndHookMethod("android.telephony.TelephonyManager", loadPackageParam.classLoader, "getNetworkCountryIso", mCountryISOHook);
             findAndHookMethod("android.telephony.TelephonyManager", loadPackageParam.classLoader, "getSimOperatorName", mOperatorNameHook);
         }
         catch (Throwable t){

@@ -18,6 +18,9 @@
         <meta-data
             android:name="xposeddescription"
             android:value="Enable Google location report in China" />
+        <meta-data
+            android:name="xposedscope"
+            android:resource="@array/hook_scope" />
 
         <activity android:name=".SettingActivity">
             <intent-filter>
