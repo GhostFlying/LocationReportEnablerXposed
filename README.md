@@ -5,7 +5,7 @@ A simple android app to enable Google Location Report, Google Now and related fu
 
 *Xposed REQUIRED*
 
-If you have already installed the xposed framwork, you can easily install the below module to enable location report and do not effect any other apps. 
+If you have already installed the xposed framework, you can easily install the below module to enable location report and do not effect any other apps. 
 
 Download: https://github.com/GhostFlying/LocationReportEnablerXposed/releases
 
